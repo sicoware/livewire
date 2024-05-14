@@ -17,9 +17,9 @@ var __copyProps = (to, from, except, desc) => {
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
 
-// ../alpine/packages/alpinejs/dist/module.cjs.js
+// node_modules/alpinejs/dist/module.cjs.js
 var require_module_cjs = __commonJS({
-  "../alpine/packages/alpinejs/dist/module.cjs.js"(exports, module) {
+  "node_modules/alpinejs/dist/module.cjs.js"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -3807,9 +3807,9 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
 });
 
-// ../alpine/packages/collapse/dist/module.cjs.js
+// node_modules/@alpinejs/collapse/dist/module.cjs.js
 var require_module_cjs2 = __commonJS({
-  "../alpine/packages/collapse/dist/module.cjs.js"(exports, module) {
+  "node_modules/@alpinejs/collapse/dist/module.cjs.js"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -3928,9 +3928,9 @@ var require_module_cjs2 = __commonJS({
   }
 });
 
-// ../alpine/packages/focus/dist/module.cjs.js
+// node_modules/@alpinejs/focus/dist/module.cjs.js
 var require_module_cjs3 = __commonJS({
-  "../alpine/packages/focus/dist/module.cjs.js"(exports, module) {
+  "node_modules/@alpinejs/focus/dist/module.cjs.js"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -4930,9 +4930,9 @@ var require_module_cjs3 = __commonJS({
   }
 });
 
-// ../alpine/packages/persist/dist/module.cjs.js
+// node_modules/@alpinejs/persist/dist/module.cjs.js
 var require_module_cjs4 = __commonJS({
-  "../alpine/packages/persist/dist/module.cjs.js"(exports, module) {
+  "node_modules/@alpinejs/persist/dist/module.cjs.js"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5019,9 +5019,9 @@ var require_module_cjs4 = __commonJS({
   }
 });
 
-// ../alpine/packages/intersect/dist/module.cjs.js
+// node_modules/@alpinejs/intersect/dist/module.cjs.js
 var require_module_cjs5 = __commonJS({
-  "../alpine/packages/intersect/dist/module.cjs.js"(exports, module) {
+  "node_modules/@alpinejs/intersect/dist/module.cjs.js"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5101,9 +5101,9 @@ var require_module_cjs5 = __commonJS({
   }
 });
 
-// ../alpine/packages/anchor/dist/module.cjs.js
+// node_modules/@alpinejs/anchor/dist/module.cjs.js
 var require_module_cjs6 = __commonJS({
-  "../alpine/packages/anchor/dist/module.cjs.js"(exports, module) {
+  "node_modules/@alpinejs/anchor/dist/module.cjs.js"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -6639,9 +6639,9 @@ var require_nprogress = __commonJS({
   }
 });
 
-// ../alpine/packages/morph/dist/module.cjs.js
+// node_modules/@alpinejs/morph/dist/module.cjs.js
 var require_module_cjs7 = __commonJS({
-  "../alpine/packages/morph/dist/module.cjs.js"(exports, module) {
+  "node_modules/@alpinejs/morph/dist/module.cjs.js"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -7001,9 +7001,9 @@ var require_module_cjs7 = __commonJS({
   }
 });
 
-// ../alpine/packages/mask/dist/module.cjs.js
+// node_modules/@alpinejs/mask/dist/module.cjs.js
 var require_module_cjs8 = __commonJS({
-  "../alpine/packages/mask/dist/module.cjs.js"(exports, module) {
+  "node_modules/@alpinejs/mask/dist/module.cjs.js"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -7307,9 +7307,9 @@ function diff(left, right, diffs = {}, path = "") {
   });
   return diffs;
 }
-function extractData(payload) {
-  let value = isSynthetic(payload) ? payload[0] : payload;
-  let meta = isSynthetic(payload) ? payload[1] : void 0;
+function extractData(payload2) {
+  let value = isSynthetic(payload2) ? payload2[0] : payload2;
+  let meta = isSynthetic(payload2) ? payload2[1] : void 0;
   if (isObjecty(value)) {
     Object.entries(value).forEach(([key, iValue]) => {
       value[key] = extractData(iValue);
@@ -7420,9 +7420,9 @@ var UploadManager = class {
       setUploadLoading(this.component, name);
       this.handleSignedUrl(name, url);
     });
-    this.component.$wire.$on("upload:generatedSignedUrlForS3", ({ name, payload }) => {
+    this.component.$wire.$on("upload:generatedSignedUrlForS3", ({ name, payload: payload2 }) => {
       setUploadLoading(this.component, name);
-      this.handleS3PreSignedUrl(name, payload);
+      this.handleS3PreSignedUrl(name, payload2);
     });
     this.component.$wire.$on("upload:finished", ({ name, tmpFilenames }) => this.markUploadFinished(name, tmpFilenames));
     this.component.$wire.$on("upload:errored", ({ name }) => this.markUploadErrored(name));
@@ -7470,18 +7470,30 @@ var UploadManager = class {
     let csrfToken = getCsrfToken();
     if (csrfToken)
       headers["X-CSRF-TOKEN"] = csrfToken;
+    if (payload.upload_id) {
+      this.makeRequest(name, formData, "put", url, headers, (response) => {
+        if (payload.next_part == payload.parts_count) {
+          return [this.component.$wire.call("completeMultipartUpload", name, payload.upload_id).location];
+        }
+        return void 0;
+      });
+      if (payload.next_part < payload.parts_count) {
+        this.component.$wire.call("uploadMultipart", name, payload.upload_id, payload.next_part);
+        return;
+      }
+    }
     this.makeRequest(name, formData, "post", url, headers, (response) => {
       return response.paths;
     });
   }
-  handleS3PreSignedUrl(name, payload) {
+  handleS3PreSignedUrl(name, payload2) {
     let formData = this.uploadBag.first(name).files[0];
-    let headers = payload.headers;
+    let headers = payload2.headers;
     if ("Host" in headers)
       delete headers.Host;
-    let url = payload.url;
+    let url = payload2.url;
     this.makeRequest(name, formData, "put", url, headers, (response) => {
-      return [payload.path];
+      return [payload2.path];
     });
   }
   makeRequest(name, formData, method, url, headers, retrievePaths) {
@@ -7498,7 +7510,9 @@ var UploadManager = class {
     request.addEventListener("load", () => {
       if ((request.status + "")[0] === "2") {
         let paths = retrievePaths(request.response && JSON.parse(request.response));
-        this.component.$wire.call("_finishUpload", name, paths, this.uploadBag.first(name).multiple);
+        if (paths) {
+          this.component.$wire.call("_finishUpload", name, paths, this.uploadBag.first(name).multiple);
+        }
         return;
       }
       let errors = null;
@@ -7782,8 +7796,8 @@ var RequestPool = class {
     let successReceivers = [];
     let failureReceivers = [];
     this.commits.forEach((commit) => {
-      let [payload, succeed2, fail2] = commit.toRequestPayload();
-      commitPayloads.push(payload);
+      let [payload2, succeed2, fail2] = commit.toRequestPayload();
+      commitPayloads.push(payload2);
       successReceivers.push(succeed2);
       failureReceivers.push(fail2);
     });
@@ -7821,7 +7835,7 @@ var Commit = class {
   toRequestPayload() {
     let propertiesDiff = diff(this.component.canonical, this.component.ephemeral);
     let updates = this.component.mergeQueuedUpdates(propertiesDiff);
-    let payload = {
+    let payload2 = {
       snapshot: this.component.snapshotEncoded,
       updates,
       calls: this.calls.map((i) => ({
@@ -7838,7 +7852,7 @@ var Commit = class {
     let respond = () => respondCallbacks.forEach((i) => i());
     let finishTarget = trigger("commit", {
       component: this.component,
-      commit: payload,
+      commit: payload2,
       succeed: (callback) => {
         succeedCallbacks.push(callback);
       },
@@ -7870,7 +7884,7 @@ var Commit = class {
       respond();
       fail();
     };
-    return [payload, handleResponse, handleFailure];
+    return [payload2, handleResponse, handleFailure];
   }
 };
 
@@ -7976,12 +7990,12 @@ async function requestCall(component, method, params) {
   return promise;
 }
 async function sendRequest(pool) {
-  let [payload, handleSuccess, handleFailure] = pool.payload();
+  let [payload2, handleSuccess, handleFailure] = pool.payload();
   let options = {
     method: "POST",
     body: JSON.stringify({
       _token: getCsrfToken(),
-      components: payload
+      components: payload2
     }),
     headers: {
       "Content-type": "application/json",
@@ -10309,10 +10323,10 @@ function applyDelay(directive2) {
   ];
 }
 function whenTargetsArePartOfRequest(component, targets, inverted, [startLoading, endLoading]) {
-  return on("commit", ({ component: iComponent, commit: payload, respond }) => {
+  return on("commit", ({ component: iComponent, commit: payload2, respond }) => {
     if (iComponent !== component)
       return;
-    if (targets.length > 0 && containsTargets(payload, targets) === inverted)
+    if (targets.length > 0 && containsTargets(payload2, targets) === inverted)
       return;
     startLoading();
     respond(() => {
@@ -10350,8 +10364,8 @@ function whenTargetsArePartOfFileUpload(component, targets, [startLoading, endLo
     cleanupC();
   };
 }
-function containsTargets(payload, targets) {
-  let { updates, calls } = payload;
+function containsTargets(payload2, targets) {
+  let { updates, calls } = payload2;
   return targets.some(({ target, params }) => {
     if (params) {
       return calls.some(({ method, params: methodParams }) => {

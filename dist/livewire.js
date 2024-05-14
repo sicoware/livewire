@@ -408,9 +408,9 @@
     });
     return diffs;
   }
-  function extractData(payload) {
-    let value = isSynthetic(payload) ? payload[0] : payload;
-    let meta = isSynthetic(payload) ? payload[1] : void 0;
+  function extractData(payload2) {
+    let value = isSynthetic(payload2) ? payload2[0] : payload2;
+    let meta = isSynthetic(payload2) ? payload2[1] : void 0;
     if (isObjecty(value)) {
       Object.entries(value).forEach(([key, iValue]) => {
         value[key] = extractData(iValue);
@@ -521,9 +521,9 @@
         setUploadLoading(this.component, name);
         this.handleSignedUrl(name, url);
       });
-      this.component.$wire.$on("upload:generatedSignedUrlForS3", ({ name, payload }) => {
+      this.component.$wire.$on("upload:generatedSignedUrlForS3", ({ name, payload: payload2 }) => {
         setUploadLoading(this.component, name);
-        this.handleS3PreSignedUrl(name, payload);
+        this.handleS3PreSignedUrl(name, payload2);
       });
       this.component.$wire.$on("upload:finished", ({ name, tmpFilenames }) => this.markUploadFinished(name, tmpFilenames));
       this.component.$wire.$on("upload:errored", ({ name }) => this.markUploadErrored(name));
@@ -571,18 +571,30 @@
       let csrfToken = getCsrfToken();
       if (csrfToken)
         headers["X-CSRF-TOKEN"] = csrfToken;
+      if (payload.upload_id) {
+        this.makeRequest(name, formData, "put", url, headers, (response) => {
+          if (payload.next_part == payload.parts_count) {
+            return [this.component.$wire.call("completeMultipartUpload", name, payload.upload_id).location];
+          }
+          return void 0;
+        });
+        if (payload.next_part < payload.parts_count) {
+          this.component.$wire.call("uploadMultipart", name, payload.upload_id, payload.next_part);
+          return;
+        }
+      }
       this.makeRequest(name, formData, "post", url, headers, (response) => {
         return response.paths;
       });
     }
-    handleS3PreSignedUrl(name, payload) {
+    handleS3PreSignedUrl(name, payload2) {
       let formData = this.uploadBag.first(name).files[0];
-      let headers = payload.headers;
+      let headers = payload2.headers;
       if ("Host" in headers)
         delete headers.Host;
-      let url = payload.url;
+      let url = payload2.url;
       this.makeRequest(name, formData, "put", url, headers, (response) => {
-        return [payload.path];
+        return [payload2.path];
       });
     }
     makeRequest(name, formData, method, url, headers, retrievePaths) {
@@ -599,7 +611,9 @@
       request.addEventListener("load", () => {
         if ((request.status + "")[0] === "2") {
           let paths = retrievePaths(request.response && JSON.parse(request.response));
-          this.component.$wire.call("_finishUpload", name, paths, this.uploadBag.first(name).multiple);
+          if (paths) {
+            this.component.$wire.call("_finishUpload", name, paths, this.uploadBag.first(name).multiple);
+          }
           return;
         }
         let errors = null;
@@ -710,7 +724,7 @@
     uploadManager.cancelUpload(name, cancelledCallback);
   }
 
-  // ../alpine/packages/alpinejs/dist/module.esm.js
+  // node_modules/alpinejs/dist/module.esm.js
   var flushPending = false;
   var flushing = false;
   var queue = [];
@@ -4041,8 +4055,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       let successReceivers = [];
       let failureReceivers = [];
       this.commits.forEach((commit) => {
-        let [payload, succeed2, fail2] = commit.toRequestPayload();
-        commitPayloads.push(payload);
+        let [payload2, succeed2, fail2] = commit.toRequestPayload();
+        commitPayloads.push(payload2);
         successReceivers.push(succeed2);
         failureReceivers.push(fail2);
       });
@@ -4080,7 +4094,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     toRequestPayload() {
       let propertiesDiff = diff(this.component.canonical, this.component.ephemeral);
       let updates = this.component.mergeQueuedUpdates(propertiesDiff);
-      let payload = {
+      let payload2 = {
         snapshot: this.component.snapshotEncoded,
         updates,
         calls: this.calls.map((i) => ({
@@ -4097,7 +4111,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       let respond = () => respondCallbacks.forEach((i) => i());
       let finishTarget = trigger2("commit", {
         component: this.component,
-        commit: payload,
+        commit: payload2,
         succeed: (callback) => {
           succeedCallbacks.push(callback);
         },
@@ -4129,7 +4143,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
         respond();
         fail();
       };
-      return [payload, handleResponse, handleFailure];
+      return [payload2, handleResponse, handleFailure];
     }
   };
 
@@ -4235,12 +4249,12 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     return promise;
   }
   async function sendRequest(pool) {
-    let [payload, handleSuccess, handleFailure] = pool.payload();
+    let [payload2, handleSuccess, handleFailure] = pool.payload();
     let options = {
       method: "POST",
       body: JSON.stringify({
         _token: getCsrfToken(),
-        components: payload
+        components: payload2
       }),
       headers: {
         "Content-type": "application/json",
@@ -4752,7 +4766,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     }
   };
 
-  // ../alpine/packages/collapse/dist/module.esm.js
+  // node_modules/@alpinejs/collapse/dist/module.esm.js
   function src_default2(Alpine3) {
     Alpine3.directive("collapse", collapse);
     collapse.inline = (el, { modifiers }) => {
@@ -4846,7 +4860,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   var module_default2 = src_default2;
 
-  // ../alpine/packages/focus/dist/module.esm.js
+  // node_modules/@alpinejs/focus/dist/module.esm.js
   var candidateSelectors = ["input", "select", "textarea", "a[href]", "button", "[tabindex]:not(slot)", "audio[controls]", "video[controls]", '[contenteditable]:not([contenteditable="false"])', "details>summary:first-of-type", "details"];
   var candidateSelector = /* @__PURE__ */ candidateSelectors.join(",");
   var NoElement = typeof Element === "undefined";
@@ -5795,7 +5809,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   var module_default3 = src_default3;
 
-  // ../alpine/packages/persist/dist/module.esm.js
+  // node_modules/@alpinejs/persist/dist/module.esm.js
   function src_default4(Alpine3) {
     let persist = () => {
       let alias;
@@ -5857,7 +5871,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   var module_default4 = src_default4;
 
-  // ../alpine/packages/intersect/dist/module.esm.js
+  // node_modules/@alpinejs/intersect/dist/module.esm.js
   function src_default5(Alpine3) {
     Alpine3.directive("intersect", Alpine3.skipDuringClone((el, { value, expression, modifiers }, { evaluateLater: evaluateLater2, cleanup: cleanup2 }) => {
       let evaluate3 = evaluateLater2(expression);
@@ -5912,7 +5926,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   var module_default5 = src_default5;
 
-  // ../alpine/packages/anchor/dist/module.esm.js
+  // node_modules/@alpinejs/anchor/dist/module.esm.js
   var min = Math.min;
   var max = Math.max;
   var round = Math.round;
@@ -8069,7 +8083,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     return data2;
   }
 
-  // ../alpine/packages/morph/dist/module.esm.js
+  // node_modules/@alpinejs/morph/dist/module.esm.js
   function morph(from, toHtml, options) {
     monkeyPatchDomSetAttributeToAllowAtSymbols();
     let fromEl;
@@ -8404,7 +8418,7 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
   }
   var module_default7 = src_default7;
 
-  // ../alpine/packages/mask/dist/module.esm.js
+  // node_modules/@alpinejs/mask/dist/module.esm.js
   function src_default8(Alpine3) {
     Alpine3.directive("mask", (el, { value, expression }, { effect: effect3, evaluateLater: evaluateLater2, cleanup: cleanup2 }) => {
       let templateFn = () => expression;
@@ -9438,10 +9452,10 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
     ];
   }
   function whenTargetsArePartOfRequest(component, targets, inverted, [startLoading, endLoading]) {
-    return on2("commit", ({ component: iComponent, commit: payload, respond }) => {
+    return on2("commit", ({ component: iComponent, commit: payload2, respond }) => {
       if (iComponent !== component)
         return;
-      if (targets.length > 0 && containsTargets(payload, targets) === inverted)
+      if (targets.length > 0 && containsTargets(payload2, targets) === inverted)
         return;
       startLoading();
       respond(() => {
@@ -9479,8 +9493,8 @@ ${expression ? 'Expression: "' + expression + '"\n\n' : ""}`, el);
       cleanupC();
     };
   }
-  function containsTargets(payload, targets) {
-    let { updates, calls } = payload;
+  function containsTargets(payload2, targets) {
+    let { updates, calls } = payload2;
     return targets.some(({ target, params }) => {
       if (params) {
         return calls.some(({ method, params: methodParams }) => {
